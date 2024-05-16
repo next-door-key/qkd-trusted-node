@@ -46,10 +46,10 @@ fi
 
 # Generate KME
 echo "Generating KME..."
-openssl req -new -nodes -out kme-1.csr -newkey rsa:4096 -keyout "$kme_key" -subj "/CN=$kme_id/O=KME $kme_num/C=LV"
-openssl x509 -req -in kme-1.csr -CA "$ca_cert" -CAkey ca.key -CAcreateserial -out "$kme_cert" -days 365 -sha256
+openssl req -new -nodes -out "$kme_id".csr -newkey rsa:4096 -keyout "$kme_key" -subj "/CN=$kme_id/O=KME $kme_num/C=LV"
+openssl x509 -req -in "$kme_id".csr -CA "$ca_cert" -CAkey ca.key -CAcreateserial -out "$kme_cert" -days 365 -sha256
 
 # Generate SAE
 echo "Generating SAE..."
-openssl req -new -nodes -out sae-1.csr -newkey rsa:4096 -keyout sae-1.key -subj "/CN=$sae_id/O=SAE $kme_num/C=LV"
-openssl x509 -req -in sae-1.csr -CA "$ca_cert" -CAkey ca.key -CAcreateserial -out "$sae_cert" -days 365 -sha256
+openssl req -new -nodes -out "$sae_id".csr -newkey rsa:4096 -keyout "$sae_id".key -subj "/CN=$sae_id/O=SAE $kme_num/C=LV"
+openssl x509 -req -in "$sae_id".csr -CA "$ca_cert" -CAkey ca.key -CAcreateserial -out "$sae_cert" -days 365 -sha256

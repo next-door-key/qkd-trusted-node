@@ -6,10 +6,10 @@ services:
         environment:
             - IS_MASTER=1
             - KME_ID=ndk-kme-a1
-            - ATTACHED_SAE_ID=ndk-sae-a1
+            - ATTACHED_SAE_ID=tn-3-a1b3
             - LINKED_TO_KME=https://ndk-kme-b1:8020
             - LINKED_KME_ID=ndk-kme-b1
-            - LINKED_SAE_ID=ndk-sae-b1
+            - LINKED_SAE_ID=tn-2-a2b1
             - MIN_KEY_SIZE=64
             - MAX_KEY_SIZE=1024
             - DEFAULT_KEY_SIZE=128
@@ -24,7 +24,7 @@ services:
             - CA_FILE=/certs/ca.crt
             - KME_CERT=/certs/kme-a1.crt
             - KME_KEY=/certs/kme-a1.key
-            - SAE_CERT=/certs/sae-a1.crt
+            - SAE_CERT=/certs/tn-3-a1b3.crt
         volumes:
             - ./certs:/certs:ro
         ports:
@@ -32,7 +32,7 @@ services:
         depends_on:
             - rabbitmq
         healthcheck:
-            test: curl -f -k --cert /certs/sae-a1.crt --key /certs/sae-a1.key https://ndk-kme-a1:8010 || exit 1
+            test: curl -f -k --cert /certs/tn-3-a1b3.crt --key /certs/tn-3-a1b3.key https://ndk-kme-a1:8010 || exit 1
             interval: 1m
             timeout: 10s
             retries: 1
@@ -48,10 +48,10 @@ services:
         environment:
             - IS_MASTER=0
             - KME_ID=ndk-kme-b1
-            - ATTACHED_SAE_ID=ndk-sae-b1
+            - ATTACHED_SAE_ID=tn-2-a2b1
             - LINKED_TO_KME=https://ndk-kme-a1:8010
             - LINKED_KME_ID=ndk-kme-a1
-            - LINKED_SAE_ID=ndk-sae-a1
+            - LINKED_SAE_ID=tn-3-a1b3
             - MIN_KEY_SIZE=64
             - MAX_KEY_SIZE=1024
             - DEFAULT_KEY_SIZE=128
@@ -66,7 +66,7 @@ services:
             - CA_FILE=/certs/ca.crt
             - KME_CERT=/certs/kme-b1.crt
             - KME_KEY=/certs/kme-b1.key
-            - SAE_CERT=/certs/sae-b1.crt
+            - SAE_CERT=/certs/tn-2-a2b1.crt
         volumes:
             - ./certs:/certs:ro
         depends_on:
@@ -75,7 +75,7 @@ services:
         ports:
             - "8020:8000"
         healthcheck:
-            test: curl -f -k --cert /certs/sae-b1.crt --key /certs/sae-b1.key https://ndk-kme-b1:8020 || exit 1
+            test: curl -f -k --cert /certs/tn-2-a2b1.crt --key /certs/tn-2-a2b1.key https://ndk-kme-b1:8020 || exit 1
             interval: 1m
             timeout: 10s
             retries: 1
@@ -91,10 +91,10 @@ services:
         environment:
             - IS_MASTER=1
             - KME_ID=ndk-kme-a2
-            - ATTACHED_SAE_ID=ndk-sae-a2
+            - ATTACHED_SAE_ID=tn-2-a2b1
             - LINKED_TO_KME=https://ndk-kme-b2:8040
             - LINKED_KME_ID=ndk-kme-b2
-            - LINKED_SAE_ID=ndk-sae-b2
+            - LINKED_SAE_ID=tn-1-a2b2
             - MIN_KEY_SIZE=64
             - MAX_KEY_SIZE=1024
             - DEFAULT_KEY_SIZE=128
@@ -109,7 +109,7 @@ services:
             - CA_FILE=/certs/ca.crt
             - KME_CERT=/certs/kme-a2.crt
             - KME_KEY=/certs/kme-a2.key
-            - SAE_CERT=/certs/sae-a2.crt
+            - SAE_CERT=/certs/tn-2-a2b1.crt
         volumes:
             - ./certs:/certs:ro
         depends_on:
@@ -117,7 +117,7 @@ services:
         ports:
             - "8030:8000"
         healthcheck:
-            test: curl -f -k --cert /certs/sae-a2.crt --key /certs/sae-a2.key https://ndk-kme-a2:8030 || exit 1
+            test: curl -f -k --cert /certs/tn-2-a2b1.crt --key /certs/tn-2-a2b1.key https://ndk-kme-a2:8030 || exit 1
             interval: 1m
             timeout: 10s
             retries: 1
@@ -133,10 +133,10 @@ services:
         environment:
             - IS_MASTER=0
             - KME_ID=ndk-kme-b2
-            - ATTACHED_SAE_ID=ndk-sae-b2
+            - ATTACHED_SAE_ID=tn-1-a2b2
             - LINKED_TO_KME=https://ndk-kme-a2:8030
             - LINKED_KME_ID=ndk-kme-a2
-            - LINKED_SAE_ID=ndk-sae-a2
+            - LINKED_SAE_ID=tn-2-a2b1
             - MIN_KEY_SIZE=64
             - MAX_KEY_SIZE=1024
             - DEFAULT_KEY_SIZE=128
@@ -151,7 +151,7 @@ services:
             - CA_FILE=/certs/ca.crt
             - KME_CERT=/certs/kme-b2.crt
             - KME_KEY=/certs/kme-b2.key
-            - SAE_CERT=/certs/sae-b2.crt
+            - SAE_CERT=/certs/tn-1-a2b2.crt
         volumes:
             - ./certs:/certs:ro
         depends_on:
@@ -160,7 +160,7 @@ services:
         ports:
             - "8040:8000"
         healthcheck:
-            test: curl -f -k --cert /certs/sae-b2.crt --key /certs/sae-b2.key https://ndk-kme-b2:8040 || exit 1
+            test: curl -f -k --cert /certs/tn-1-a2b2.crt --key /certs/tn-1-a2b2.key https://ndk-kme-b2:8040 || exit 1
             interval: 1m
             timeout: 10s
             retries: 1
@@ -176,10 +176,10 @@ services:
         environment:
             - IS_MASTER=1
             - KME_ID=ndk-kme-a3
-            - ATTACHED_SAE_ID=ndk-sae-a3
+            - ATTACHED_SAE_ID=tn-4-a3b3
             - LINKED_TO_KME=https://ndk-kme-b3:60
             - LINKED_KME_ID=ndk-kme-b3
-            - LINKED_SAE_ID=ndk-sae-b3
+            - LINKED_SAE_ID=tn-3-a1b3
             - MIN_KEY_SIZE=64
             - MAX_KEY_SIZE=1024
             - DEFAULT_KEY_SIZE=128
@@ -194,7 +194,7 @@ services:
             - CA_FILE=/certs/ca.crt
             - KME_CERT=/certs/kme-a3.crt
             - KME_KEY=/certs/kme-a3.key
-            - SAE_CERT=/certs/sae-a3.crt
+            - SAE_CERT=/certs/tn-4-a3b3.crt
         volumes:
             - ./certs:/certs:ro
         depends_on:
@@ -202,7 +202,7 @@ services:
         ports:
             - "8050:8000"
         healthcheck:
-            test: curl -f -k --cert /certs/sae-a3.crt --key /certs/sae-a3.key https://ndk-kme-a3:8050 || exit 1
+            test: curl -f -k --cert /certs/tn-4-a3b3.crt --key /certs/tn-4-a3b3.key https://ndk-kme-a3:8050 || exit 1
             interval: 1m
             timeout: 10s
             retries: 1
@@ -218,10 +218,10 @@ services:
         environment:
             - IS_MASTER=0
             - KME_ID=ndk-kme-b3
-            - ATTACHED_SAE_ID=ndk-sae-b3
+            - ATTACHED_SAE_ID=tn-3-a1b3
             - LINKED_TO_KME=https://ndk-kme-a3:8050
             - LINKED_KME_ID=ndk-kme-a3
-            - LINKED_SAE_ID=ndk-sae-a3
+            - LINKED_SAE_ID=tn-4-a3b3
             - MIN_KEY_SIZE=64
             - MAX_KEY_SIZE=1024
             - DEFAULT_KEY_SIZE=128
@@ -236,7 +236,7 @@ services:
             - CA_FILE=/certs/ca.crt
             - KME_CERT=/certs/kme-b3.crt
             - KME_KEY=/certs/kme-b3.key
-            - SAE_CERT=/certs/sae-b3.crt
+            - SAE_CERT=/certs/tn-3-a1b3.crt
         volumes:
             - ./certs:/certs:ro
         depends_on:
@@ -245,7 +245,7 @@ services:
         ports:
             - "8060:8000"
         healthcheck:
-            test: curl -f -k --cert /certs/sae-b3.crt --key /certs/sae-b3.key https://ndk-kme-b3:8060 || exit 1
+            test: curl -f -k --cert /certs/tn-3-a1b3.crt --key /certs/tn-3-a1b3.key https://ndk-kme-b3:8060 || exit 1
             interval: 1m
             timeout: 10s
             retries: 1

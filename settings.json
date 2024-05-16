@@ -1,23 +1,28 @@
 {
-    "is_master": 1,
-    "kme_id": "ndk-kme-a1",
-    "attached_sae_id": "ndk-sae-a1",
-    "linked_to_kme": "https://ndk-kme-b1:8020",
-    "linked_kme_id": "ndk-kme-b1",
-    "linked_sae_id": "ndk-sae-b1",
-    "min_key_size": 64,
-    "max_key_size": 1024,
-    "default_key_size": 128,
-    "max_key_count": 50,
-    "max_keys_per_request": 50,
-    "key_generation_timeout_in_seconds": 1,
-    "mq_host": "localhost",
-    "mq_port": 5672,
-    "mq_username": "guest",
-    "mq_password": "guest",
-    "mq_shared_queue": "ndk-tm-ab1",
+    "id": "tn-1-a2b2",
+    "server_cert_file": "certs/tn-1-a2b2.crt",
+    "server_key_file": "certs/tn-1-a2b2.key",
     "ca_file": "certs/ca.crt",
-    "kme_cert": "certs/kme-a1.crt",
-    "kme_key": "certs/kme-a1.key",
-    "sae_cert": "certs/sae-a1.crt"
+    "attached_kmes": [
+        {
+            "url": "https://localhost:8030",
+            "kme_id": "ndk-kme-a2",
+            "kme_cert": "certs/kme-a2.crt",
+            "sae_cert": "certs/tn-1-a2b2.crt",
+            "sae_key": "certs/tn-1-a2b2.key"
+        },
+        {
+            "url": "https://localhost:8040",
+            "kme_id": "ndk-kme-b2",
+            "kme_cert": "certs/kme-b2.crt",
+            "sae_cert": "certs/tn-1-a2b2.crt",
+            "sae_key": "certs/tn-1-a2b2.key"
+        }
+    ],
+    "attached_saes": [
+        {
+            "sae_id": "sae-a",
+            "sae_cert": "certs/sae-a.crt"
+        }
+    ]
 }

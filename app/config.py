@@ -1,12 +1,26 @@
 import argparse
 from typing import Any, Dict, Tuple, Type
 
+from pydantic import BaseModel
 from pydantic_settings import (
     BaseSettings,
     PydanticBaseSettingsSource,
     SettingsConfigDict,
     JsonConfigSettingsSource,
 )
+
+
+class AttachedKmes(BaseModel):
+    url: str
+    kme_id: str
+    kme_cert: str
+    sae_cert: str
+    sae_key: str
+
+
+class AttachedSaes(BaseModel):
+    sae_id: str
+    sae_cert: str
 
 
 class Settings(BaseSettings):
@@ -20,33 +34,14 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(json_file=_args.settings, json_file_encoding='utf-8')
 
-    is_master: bool = False
+    id: str
 
-    kme_id: str
-    attached_sae_id: str
-
-    linked_to_kme: str
-    linked_kme_id: str
-    linked_sae_id: str
-
-    min_key_size: int = 64
-    max_key_size: int = 1024
-    default_key_size: int = 128
-    max_key_count: int = 1000
-    max_keys_per_request: int = 128
-
-    key_generation_timeout_in_seconds: int = 2
-
-    mq_host: str = 'localhost'
-    mq_port: int = 5672
-    mq_username: str = 'guest'
-    mq_password: str = 'guest'
-    mq_shared_queue: str
-
+    server_cert_file: str
+    server_key_file: str
     ca_file: str
-    kme_cert: str
-    kme_key: str
-    sae_cert: str
+
+    attached_kmes: list[AttachedKmes]
+    attached_saes: list[AttachedSaes]
 
     @classmethod
     def settings_customise_sources(
