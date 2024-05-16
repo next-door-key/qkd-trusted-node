@@ -1,0 +1,23 @@
+{
+    "id": "tn-3-a1b3",
+    "server_cert_file": "certs/tn-3-a1b3.crt",
+    "server_key_file": "certs/tn-3-a1b3.key",
+    "ca_file": "certs/ca.crt",
+    "attached_kmes": [
+        {
+            "url": "https://localhost:8010",
+            "kme_id": "ndk-kme-a1",
+            "kme_cert": "certs/kme-a1.crt",
+            "sae_cert": "certs/tn-3-a1b3.crt",
+            "sae_key": "certs/tn-3-a1b3.key"
+        },
+        {
+            "url": "https://localhost:8060",
+            "kme_id": "ndk-kme-b3",
+            "kme_cert": "certs/kme-b3.crt",
+            "sae_cert": "certs/tn-3-a1b3.crt",
+            "sae_key": "certs/tn-3-a1b3.key"
+        }
+    ],
+    "attached_saes": []
+}
