@@ -1,3 +1,5 @@
 docker
 certs/*
 !certs/.gitkeep
+settings*.json
+!settings.json

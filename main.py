@@ -10,6 +10,7 @@ if __name__ == '__main__':
 
     parser.add_argument('-p', '--port', type=int, default=8000, help='Port to bind on')
     parser.add_argument('-r', '--reload', type=bool, default=False, help='Reload when changes found')
+    parser.add_argument('-s', '--settings', type=str, default='settings.json', help='Settings file name')
 
     args = parser.parse_args()
 

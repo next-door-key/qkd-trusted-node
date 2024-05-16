@@ -1,7 +1,25 @@
-from pydantic_settings import BaseSettings
+import argparse
+from typing import Any, Dict, Tuple, Type
+
+from pydantic_settings import (
+    BaseSettings,
+    PydanticBaseSettingsSource,
+    SettingsConfigDict,
+    JsonConfigSettingsSource,
+)
 
 
 class Settings(BaseSettings):
+    _parser = argparse.ArgumentParser()
+
+    _parser.add_argument('-p', '--port', type=int, default=8000, help='Port to bind on')
+    _parser.add_argument('-r', '--reload', type=bool, default=False, help='Reload when changes found')
+    _parser.add_argument('-s', '--settings', type=str, default='settings.json', help='Settings file name')
+
+    _args = _parser.parse_args()
+
+    model_config = SettingsConfigDict(json_file=_args.settings, json_file_encoding='utf-8')
+
     is_master: bool = False
 
     kme_id: str
@@ -29,3 +47,14 @@ class Settings(BaseSettings):
     kme_cert: str
     kme_key: str
     sae_cert: str
+
+    @classmethod
+    def settings_customise_sources(
+            cls,
+            settings_cls: Type[BaseSettings],
+            init_settings: PydanticBaseSettingsSource,
+            env_settings: PydanticBaseSettingsSource,
+            dotenv_settings: PydanticBaseSettingsSource,
+            file_secret_settings: PydanticBaseSettingsSource,
+    ) -> Tuple[PydanticBaseSettingsSource, ...]:
+        return init_settings, env_settings, dotenv_settings, JsonConfigSettingsSource(settings_cls)

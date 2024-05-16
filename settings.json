@@ -1,0 +1,23 @@
+{
+    "is_master": 1,
+    "kme_id": "ndk-kme-a1",
+    "attached_sae_id": "ndk-sae-a1",
+    "linked_to_kme": "https://ndk-kme-b1:8020",
+    "linked_kme_id": "ndk-kme-b1",
+    "linked_sae_id": "ndk-sae-b1",
+    "min_key_size": 64,
+    "max_key_size": 1024,
+    "default_key_size": 128,
+    "max_key_count": 50,
+    "max_keys_per_request": 50,
+    "key_generation_timeout_in_seconds": 1,
+    "mq_host": "localhost",
+    "mq_port": 5672,
+    "mq_username": "guest",
+    "mq_password": "guest",
+    "mq_shared_queue": "ndk-tm-ab1",
+    "ca_file": "certs/ca.crt",
+    "kme_cert": "certs/kme-a1.crt",
+    "kme_key": "certs/kme-a1.key",
+    "sae_cert": "certs/sae-a1.crt"
+}
