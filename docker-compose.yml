@@ -1,0 +1,273 @@
+services:
+    ndk-kme-a1:
+        image: 5b3dea173f82
+        container_name: ndk-kme-a1
+        restart: always
+        environment:
+            - IS_MASTER=1
+            - KME_ID=ndk-kme-a1
+            - ATTACHED_SAE_ID=ndk-sae-a1
+            - LINKED_TO_KME=https://ndk-kme-b1:8020
+            - LINKED_KME_ID=ndk-kme-b1
+            - LINKED_SAE_ID=ndk-sae-b1
+            - MIN_KEY_SIZE=64
+            - MAX_KEY_SIZE=1024
+            - DEFAULT_KEY_SIZE=128
+            - MAX_KEY_COUNT=50
+            - MAX_KEYS_PER_REQUEST=50
+            - KEY_GENERATION_TIMEOUT_IN_SECONDS=1
+            - MQ_HOST=ndk-rabbitmq
+            - MQ_PORT=5672
+            - MQ_USERNAME=guest
+            - MQ_PASSWORD=guest
+            - MQ_SHARED_QUEUE=ndk-kme-a1-b1
+            - CA_FILE=/certs/ca.crt
+            - KME_CERT=/certs/kme-a1.crt
+            - KME_KEY=/certs/kme-a1.key
+            - SAE_CERT=/certs/sae-a1.crt
+        volumes:
+            - ./certs:/certs:ro
+        ports:
+            - "8010:8000"
+        depends_on:
+            - rabbitmq
+        healthcheck:
+            test: curl -f -k --cert /certs/sae-a1.crt --key /certs/sae-a1.key https://ndk-kme-a1:8010 || exit 1
+            interval: 1m
+            timeout: 10s
+            retries: 1
+        networks:
+            kme-network:
+                aliases:
+                    - ndk-kme-a1
+
+    ndk-kme-b1:
+        image: 5b3dea173f82
+        container_name: ndk-kme-b1
+        restart: always
+        environment:
+            - IS_MASTER=0
+            - KME_ID=ndk-kme-b1
+            - ATTACHED_SAE_ID=ndk-sae-b1
+            - LINKED_TO_KME=https://ndk-kme-a1:8010
+            - LINKED_KME_ID=ndk-kme-a1
+            - LINKED_SAE_ID=ndk-sae-a1
+            - MIN_KEY_SIZE=64
+            - MAX_KEY_SIZE=1024
+            - DEFAULT_KEY_SIZE=128
+            - MAX_KEY_COUNT=50
+            - MAX_KEYS_PER_REQUEST=50
+            - KEY_GENERATION_TIMEOUT_IN_SECONDS=1
+            - MQ_HOST=ndk-rabbitmq
+            - MQ_PORT=5672
+            - MQ_USERNAME=guest
+            - MQ_PASSWORD=guest
+            - MQ_SHARED_QUEUE=ndk-kme-a1-b1
+            - CA_FILE=/certs/ca.crt
+            - KME_CERT=/certs/kme-b1.crt
+            - KME_KEY=/certs/kme-b1.key
+            - SAE_CERT=/certs/sae-b1.crt
+        volumes:
+            - ./certs:/certs:ro
+        depends_on:
+            - rabbitmq
+            - ndk-kme-a1
+        ports:
+            - "8020:8000"
+        healthcheck:
+            test: curl -f -k --cert /certs/sae-b1.crt --key /certs/sae-b1.key https://ndk-kme-b1:8020 || exit 1
+            interval: 1m
+            timeout: 10s
+            retries: 1
+        networks:
+            kme-network:
+                aliases:
+                    - ndk-kme-b1
+
+    ndk-kme-a2:
+        image: 5b3dea173f82
+        container_name: ndk-kme-a2
+        restart: always
+        environment:
+            - IS_MASTER=1
+            - KME_ID=ndk-kme-a2
+            - ATTACHED_SAE_ID=ndk-sae-a2
+            - LINKED_TO_KME=https://ndk-kme-b2:8040
+            - LINKED_KME_ID=ndk-kme-b2
+            - LINKED_SAE_ID=ndk-sae-b2
+            - MIN_KEY_SIZE=64
+            - MAX_KEY_SIZE=1024
+            - DEFAULT_KEY_SIZE=128
+            - MAX_KEY_COUNT=50
+            - MAX_KEYS_PER_REQUEST=50
+            - KEY_GENERATION_TIMEOUT_IN_SECONDS=1
+            - MQ_HOST=ndk-rabbitmq
+            - MQ_PORT=5672
+            - MQ_USERNAME=guest
+            - MQ_PASSWORD=guest
+            - MQ_SHARED_QUEUE=ndk-kme-a2-b2
+            - CA_FILE=/certs/ca.crt
+            - KME_CERT=/certs/kme-a2.crt
+            - KME_KEY=/certs/kme-a2.key
+            - SAE_CERT=/certs/sae-a2.crt
+        volumes:
+            - ./certs:/certs:ro
+        depends_on:
+            - rabbitmq
+        ports:
+            - "8030:8000"
+        healthcheck:
+            test: curl -f -k --cert /certs/sae-a2.crt --key /certs/sae-a2.key https://ndk-kme-a2:8030 || exit 1
+            interval: 1m
+            timeout: 10s
+            retries: 1
+        networks:
+            kme-network:
+                aliases:
+                    - ndk-kme-a2
+
+    ndk-kme-b2:
+        image: 5b3dea173f82
+        container_name: ndk-kme-b2
+        restart: always
+        environment:
+            - IS_MASTER=0
+            - KME_ID=ndk-kme-b2
+            - ATTACHED_SAE_ID=ndk-sae-b2
+            - LINKED_TO_KME=https://ndk-kme-a2:8030
+            - LINKED_KME_ID=ndk-kme-a2
+            - LINKED_SAE_ID=ndk-sae-a2
+            - MIN_KEY_SIZE=64
+            - MAX_KEY_SIZE=1024
+            - DEFAULT_KEY_SIZE=128
+            - MAX_KEY_COUNT=50
+            - MAX_KEYS_PER_REQUEST=50
+            - KEY_GENERATION_TIMEOUT_IN_SECONDS=1
+            - MQ_HOST=ndk-rabbitmq
+            - MQ_PORT=5672
+            - MQ_USERNAME=guest
+            - MQ_PASSWORD=guest
+            - MQ_SHARED_QUEUE=ndk-kme-a2-b2
+            - CA_FILE=/certs/ca.crt
+            - KME_CERT=/certs/kme-b2.crt
+            - KME_KEY=/certs/kme-b2.key
+            - SAE_CERT=/certs/sae-b2.crt
+        volumes:
+            - ./certs:/certs:ro
+        depends_on:
+            - rabbitmq
+            - ndk-kme-a2
+        ports:
+            - "8040:8000"
+        healthcheck:
+            test: curl -f -k --cert /certs/sae-b2.crt --key /certs/sae-b2.key https://ndk-kme-b2:8040 || exit 1
+            interval: 1m
+            timeout: 10s
+            retries: 1
+        networks:
+            kme-network:
+                aliases:
+                    - ndk-kme-b2
+
+    ndk-kme-a3:
+        image: 5b3dea173f82
+        container_name: ndk-kme-a3
+        restart: always
+        environment:
+            - IS_MASTER=1
+            - KME_ID=ndk-kme-a3
+            - ATTACHED_SAE_ID=ndk-sae-a3
+            - LINKED_TO_KME=https://ndk-kme-b3:60
+            - LINKED_KME_ID=ndk-kme-b3
+            - LINKED_SAE_ID=ndk-sae-b3
+            - MIN_KEY_SIZE=64
+            - MAX_KEY_SIZE=1024
+            - DEFAULT_KEY_SIZE=128
+            - MAX_KEY_COUNT=50
+            - MAX_KEYS_PER_REQUEST=50
+            - KEY_GENERATION_TIMEOUT_IN_SECONDS=1
+            - MQ_HOST=ndk-rabbitmq
+            - MQ_PORT=5672
+            - MQ_USERNAME=guest
+            - MQ_PASSWORD=guest
+            - MQ_SHARED_QUEUE=ndk-kme-a3-b3
+            - CA_FILE=/certs/ca.crt
+            - KME_CERT=/certs/kme-a3.crt
+            - KME_KEY=/certs/kme-a3.key
+            - SAE_CERT=/certs/sae-a3.crt
+        volumes:
+            - ./certs:/certs:ro
+        depends_on:
+            - rabbitmq
+        ports:
+            - "8050:8000"
+        healthcheck:
+            test: curl -f -k --cert /certs/sae-a3.crt --key /certs/sae-a3.key https://ndk-kme-a3:8050 || exit 1
+            interval: 1m
+            timeout: 10s
+            retries: 1
+        networks:
+            kme-network:
+                aliases:
+                    - ndk-kme-a3
+
+    ndk-kme-b3:
+        image: 5b3dea173f82
+        container_name: ndk-kme-b3
+        restart: always
+        environment:
+            - IS_MASTER=0
+            - KME_ID=ndk-kme-b3
+            - ATTACHED_SAE_ID=ndk-sae-b3
+            - LINKED_TO_KME=https://ndk-kme-a3:8050
+            - LINKED_KME_ID=ndk-kme-a3
+            - LINKED_SAE_ID=ndk-sae-a3
+            - MIN_KEY_SIZE=64
+            - MAX_KEY_SIZE=1024
+            - DEFAULT_KEY_SIZE=128
+            - MAX_KEY_COUNT=50
+            - MAX_KEYS_PER_REQUEST=50
+            - KEY_GENERATION_TIMEOUT_IN_SECONDS=1
+            - MQ_HOST=ndk-rabbitmq
+            - MQ_PORT=5672
+            - MQ_USERNAME=guest
+            - MQ_PASSWORD=guest
+            - MQ_SHARED_QUEUE=ndk-kme-a3-b3
+            - CA_FILE=/certs/ca.crt
+            - KME_CERT=/certs/kme-b3.crt
+            - KME_KEY=/certs/kme-b3.key
+            - SAE_CERT=/certs/sae-b3.crt
+        volumes:
+            - ./certs:/certs:ro
+        depends_on:
+            - rabbitmq
+            - ndk-kme-a3
+        ports:
+            - "8060:8000"
+        healthcheck:
+            test: curl -f -k --cert /certs/sae-b3.crt --key /certs/sae-b3.key https://ndk-kme-b3:8060 || exit 1
+            interval: 1m
+            timeout: 10s
+            retries: 1
+        networks:
+            kme-network:
+                aliases:
+                    - ndk-kme-b3
+
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        container_name: 'rabbitmq'
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        volumes:
+            - ./docker/rabbitmq/data/:/var/lib/rabbitmq/
+            - ./docker/rabbitmq/log/:/var/log/rabbitmq
+        networks:
+            kme-network:
+                aliases:
+                    - ndk-rabbitmq
+
+networks:
+    kme-network:
+        driver: bridge
