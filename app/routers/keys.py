@@ -1,9 +1,10 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, Request
 
 from app.config import Settings
-from app.dependencies import get_settings, get_lifecycle, validate_sae_id_from_tls_cert
+from app.dependencies import get_settings, get_lifecycle, validate_sae_id_from_tls_cert, _get_client_certificate
+from app.internal.discovery import discover_trusted_nodes
 from app.internal.lifecycle import Lifecycle
 from app.models.requests import PostEncryptionKeysRequest, GetEncryptionKeysRequest, GetDecryptionKeysRequest, \
     PostDecryptionKeysRequest
@@ -18,11 +19,38 @@ router = APIRouter(
 
 @router.get('/{slave_sae_id}/status')
 async def status(
+        request: Request,
         slave_sae_id: str,
         settings: Annotated[Settings, Depends(get_settings)],
         lifecycle: Annotated[Lifecycle, Depends(get_lifecycle)]
 ):
-    pass
+    trusted_nodes = discover_trusted_nodes()
+
+    slave_kme_id = None
+
+    for trusted_node in trusted_nodes:
+        if trusted_node.trusted_node_id != settings.id and slave_sae_id in trusted_node.sae_ids:
+            slave_kme_id = trusted_node.trusted_node_id
+            break
+
+    if not slave_kme_id:
+        raise HTTPException(status_code=400, detail='The given slave_sae_id cannot be routed to')
+
+    master_sae_id = _get_client_certificate(request)[1]
+
+    return {
+        'source_KME_ID': settings.id,
+        'target_KME_ID': slave_kme_id,
+        'master_SAE_ID': master_sae_id,
+        'slave_SAE_ID': slave_sae_id,
+        'key_size': settings.default_key_size,
+        'stored_key_count': 0,
+        'max_key_count': settings.max_key_count,
+        'max_key_per_request': settings.max_keys_per_request,
+        'max_key_size': settings.max_key_size,
+        'min_key_size': settings.min_key_size,
+        'max_SAE_ID_count': 0,
+    }
 
 
 @router.get('/{slave_sae_id}/enc_keys')
@@ -32,6 +60,23 @@ async def get_encryption_keys(
         lifecycle: Annotated[Lifecycle, Depends(get_lifecycle)],
         query: GetEncryptionKeysRequest = Depends()
 ):
+    # Get list of all trusted nodes
+
+    # Find the path of the least distance
+
+    # Check all the statuses (maybe) to ensure reliable delivery
+
+    # For each hop:
+    #   1) TN1 -> KME1, /enc_keys
+    #   2) TN1 -> TN2, /notify w/ key ID
+    #   3) TN2 -> KME1, /dec_keys
+    #   4) If there are hops remaining, continue, else return key
+    #   5) TN2 -> KME2, /enc_keys
+    #   6) TN2 -> TN3, /notify w/ key ID w/ key (KME1 key XOR KME2 key)
+    #   7) TN3 -> KME2, /dec_keys
+    #   8) TN3 -> get raw key from XOR'd key with the KME2 key
+    #   9) If there are hops remaining, repeat, else return key
+
     pass
 
 

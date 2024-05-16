@@ -23,6 +23,13 @@ class AttachedSaes(BaseModel):
     sae_cert: str
 
 
+class AttachedTrustedNodes(BaseModel):
+    url: str
+    id: str
+    cert: str
+    key: str
+
+
 class Settings(BaseSettings):
     _parser = argparse.ArgumentParser()
 
@@ -48,6 +55,7 @@ class Settings(BaseSettings):
 
     attached_kmes: list[AttachedKmes]
     attached_saes: list[AttachedSaes]
+    attached_trusted_nodes: list[AttachedTrustedNodes]
 
     @classmethod
     def settings_customise_sources(

@@ -1,8 +1,8 @@
-import os
 from functools import lru_cache
 from typing import Union
 
 import OpenSSL
+from OpenSSL.crypto import X509
 from fastapi import HTTPException, Request
 
 from app.config import Settings
@@ -10,32 +10,51 @@ from app.internal.lifecycle import Lifecycle
 from app.models.kme_sae_ids import KmeSaeIds
 
 
-async def validate_sae_id_from_tls_cert(request: Request):
-    settings = get_settings()
+def _get_common_name_from_certificate(certificate: X509) -> str:
+    common_name = tuple(filter(lambda x: x[0] == b'CN', certificate.get_subject().get_components()))
 
+    return '' if len(common_name) == 0 else common_name[0][1].decode('utf-8')
+
+
+def _get_client_certificate(request: Request) -> tuple[int, str]:
     client_cert_binary = request.scope['transport'].get_extra_info('ssl_object').getpeercert(True)
     client_cert = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_ASN1, client_cert_binary)
 
-    common_name = tuple(filter(lambda x: x[0] == b'CN', client_cert.get_subject().get_components()))
-    client_cert_serial_number = client_cert.get_serial_number()
+    return client_cert.get_serial_number(), _get_common_name_from_certificate(client_cert)
 
-    request_sae_id = '' if len(common_name) == 0 else common_name[0][1].decode('utf-8')
 
-    sae_cert = OpenSSL.crypto.load_certificate(
-        OpenSSL.crypto.FILETYPE_PEM,
-        open(os.getenv('SAE_CERT'), 'rb').read()
-    )
+async def validate_sae_id_from_tls_cert(request: Request):
+    settings = get_settings()
 
-    sae_id_from_cert = tuple(filter(lambda x: x[0] == b'CN', sae_cert.get_subject().get_components()))
-    sae_id_from_cert = '' if len(sae_id_from_cert) == 0 else sae_id_from_cert[0][1].decode('utf-8')
+    request_cert_serial_number, request_sae_id = _get_client_certificate(request)
 
-    if request_sae_id != settings.attached_sae_id or request_sae_id != sae_id_from_cert:
-        raise HTTPException(status_code=400,
-                            detail='The calling SAE certificate id does not match the stored certificate')
+    if len(settings.attached_saes) == 0:
+        raise HTTPException(status_code=400, detail='There are no attached SAEs configured')
 
-    if sae_cert.get_serial_number() != client_cert_serial_number:
-        raise HTTPException(status_code=400,
-                            detail='The calling SAE certificate serial number does not match the stored certificate')
+    cert_found = False
+
+    for sae in settings.attached_saes:
+        cert = OpenSSL.crypto.load_certificate(
+            type=OpenSSL.crypto.FILETYPE_PEM,
+            buffer=open(sae.sae_cert, 'rb').read()
+        )
+
+        cert_sae_id = _get_common_name_from_certificate(cert)
+        cert_serial_number = cert.get_serial_number()
+
+        if (
+                request_sae_id == sae.sae_id and
+                request_sae_id == cert_sae_id and
+                request_cert_serial_number == cert_serial_number
+        ):
+            cert_found = True
+            break
+
+    if not cert_found:
+        raise HTTPException(
+            status_code=400,
+            detail='The calling SAE certificate is not found in local DB'
+        )
 
 
 def get_kme_and_sae_ids_from_slave_id(slave_sae_id: str) -> KmeSaeIds:

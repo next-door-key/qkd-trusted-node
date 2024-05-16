@@ -24,5 +24,19 @@
             "sae_key": "certs/tn-3-a1b3.key"
         }
     ],
-    "attached_saes": []
+    "attached_saes": [],
+    "attached_trusted_nodes": [
+        {
+            "url": "https://localhost:9010",
+            "id": "tn-2-a2b1",
+            "cert": "certs/tn-3-a1b3.crt",
+            "key": "certs/tn-3-a1b3.key"
+        },
+        {
+            "url": "https://localhost:9030",
+            "id": "tn-4-a3b3",
+            "cert": "certs/tn-3-a1b3.crt",
+            "key": "certs/tn-3-a1b3.key"
+        }
+    ]
 }

@@ -29,5 +29,13 @@
             "sae_id": "sae-a",
             "sae_cert": "certs/sae-a.crt"
         }
+    ],
+    "attached_trusted_nodes": [
+        {
+            "url": "https://localhost:9010",
+            "id": "tn-2-a2b1",
+            "cert": "certs/tn-1-a2b2.crt",
+            "key": "certs/tn-1-a2b2.key"
+        }
     ]
 }
