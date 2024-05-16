@@ -9,7 +9,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.dependencies import get_settings
 from app.internal.lifecycle import Lifecycle
-from app.routers import keys, internal
+from app.routers import keys
 
 
 @asynccontextmanager
@@ -27,7 +27,6 @@ async def lifespan(api: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.add_middleware(HTTPSRedirectMiddleware)
 
-app.include_router(router=internal.router, prefix='/api/v1')
 app.include_router(router=keys.router, prefix='/api/v1')
 
 

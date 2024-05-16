@@ -3,6 +3,11 @@
     "server_cert_file": "certs/tn-3-a1b3.crt",
     "server_key_file": "certs/tn-3-a1b3.key",
     "ca_file": "certs/ca.crt",
+    "min_key_size": 64,
+    "max_key_size": 1024,
+    "default_key_size": 1024,
+    "max_key_count": 50,
+    "max_keys_per_request": 50,
     "attached_kmes": [
         {
             "url": "https://localhost:8010",

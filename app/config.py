@@ -1,5 +1,5 @@
 import argparse
-from typing import Any, Dict, Tuple, Type
+from typing import Tuple, Type
 
 from pydantic import BaseModel
 from pydantic_settings import (
@@ -39,6 +39,12 @@ class Settings(BaseSettings):
     server_cert_file: str
     server_key_file: str
     ca_file: str
+
+    min_key_size: int
+    max_key_size: int
+    default_key_size: int
+    max_key_count: int
+    max_keys_per_request: int
 
     attached_kmes: list[AttachedKmes]
     attached_saes: list[AttachedSaes]

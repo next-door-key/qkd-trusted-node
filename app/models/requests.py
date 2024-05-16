@@ -32,14 +32,3 @@ class GetDecryptionKeysRequest(BaseModel):
 class PostDecryptionKeysRequest(BaseModel):
     key_IDs: Annotated[list[KeyIDContainer], Path(min_length=1)]
     key_IDs_extension: Union[dict, None] = None
-
-
-class PostAskForKeyRequest(BaseModel):
-    master_sae_id: str
-    slave_sae_id: str
-    size: Annotated[
-        int, Path(ge=settings.min_key_size, le=settings.max_key_size, multiple_of=8)] = settings.default_key_size
-
-
-class PostAskForKeyDeactivationRequest(BaseModel):
-    key_ID: UUID
