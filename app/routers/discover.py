@@ -9,7 +9,7 @@ logger = logging.getLogger('uvicorn.error')
 
 router = APIRouter(
     prefix='/discover',
-    tags=['keys'],
+    tags=['discover'],
     responses={404: {'message': 'Not found'}}
 )
 

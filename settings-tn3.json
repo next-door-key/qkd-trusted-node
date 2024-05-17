@@ -12,16 +12,38 @@
         {
             "url": "https://localhost:8010",
             "kme_id": "ndk-kme-a1",
+            "linked_to": "ndk-kme-b1",
             "kme_cert": "certs/kme-a1.crt",
             "sae_cert": "certs/tn-3-a1b3.crt",
-            "sae_key": "certs/tn-3-a1b3.key"
+            "sae_key": "certs/tn-3-a1b3.key",
+            "distance": 0
+        },
+        {
+            "url": "https://localhost:8020",
+            "kme_id": "ndk-kme-b1",
+            "linked_to": "ndk-kme-a1",
+            "kme_cert": "certs/kme-b1.crt",
+            "sae_cert": "certs/tn-3-a1b3.crt",
+            "sae_key": "certs/tn-3-a1b3.key",
+            "distance": 1
+        },
+        {
+            "url": "https://localhost:8050",
+            "kme_id": "ndk-kme-a3",
+            "linked_to": "ndk-kme-b3",
+            "kme_cert": "certs/kme-a3.crt",
+            "sae_cert": "certs/tn-3-a1b3.crt",
+            "sae_key": "certs/tn-3-a1b3.key",
+            "distance": 1
         },
         {
             "url": "https://localhost:8060",
             "kme_id": "ndk-kme-b3",
+            "linked_to": "ndk-kme-a3",
             "kme_cert": "certs/kme-b3.crt",
             "sae_cert": "certs/tn-3-a1b3.crt",
-            "sae_key": "certs/tn-3-a1b3.key"
+            "sae_key": "certs/tn-3-a1b3.key",
+            "distance": 0
         }
     ],
     "attached_saes": [],

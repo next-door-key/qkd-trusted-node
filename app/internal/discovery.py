@@ -21,6 +21,7 @@ def discover_trusted_nodes(
         trusted_node_id=settings.id,
         kme_ids=list(map(lambda kme: kme.kme_id, settings.attached_kmes)),
         sae_ids=list(map(lambda sae: sae.sae_id, settings.attached_saes)),
+        trusted_node_ids=list(map(lambda node: node.id, settings.attached_trusted_nodes)),
         distance=distance
     )
 

@@ -7,7 +7,7 @@ services:
             - IS_MASTER=1
             - KME_ID=ndk-kme-a1
             - ATTACHED_SAE_ID=tn-3-a1b3
-            - LINKED_TO_KME=https://ndk-kme-b1:8020
+            - LINKED_TO_KME=https://ndk-kme-b1:8000
             - LINKED_KME_ID=ndk-kme-b1
             - LINKED_SAE_ID=tn-2-a2b1
             - MIN_KEY_SIZE=64
@@ -32,7 +32,7 @@ services:
         depends_on:
             - rabbitmq
         healthcheck:
-            test: curl -f -k --cert /certs/tn-3-a1b3.crt --key /certs/tn-3-a1b3.key https://ndk-kme-a1:8010 || exit 1
+            test: curl -f -k --cert /certs/tn-3-a1b3.crt --key /certs/tn-3-a1b3.key https://ndk-kme-a1:8000 || exit 1
             interval: 1m
             timeout: 10s
             retries: 1
@@ -49,7 +49,7 @@ services:
             - IS_MASTER=0
             - KME_ID=ndk-kme-b1
             - ATTACHED_SAE_ID=tn-2-a2b1
-            - LINKED_TO_KME=https://ndk-kme-a1:8010
+            - LINKED_TO_KME=https://ndk-kme-a1:8000
             - LINKED_KME_ID=ndk-kme-a1
             - LINKED_SAE_ID=tn-3-a1b3
             - MIN_KEY_SIZE=64
@@ -75,7 +75,7 @@ services:
         ports:
             - "8020:8000"
         healthcheck:
-            test: curl -f -k --cert /certs/tn-2-a2b1.crt --key /certs/tn-2-a2b1.key https://ndk-kme-b1:8020 || exit 1
+            test: curl -f -k --cert /certs/tn-2-a2b1.crt --key /certs/tn-2-a2b1.key https://ndk-kme-b1:8000 || exit 1
             interval: 1m
             timeout: 10s
             retries: 1
@@ -92,7 +92,7 @@ services:
             - IS_MASTER=1
             - KME_ID=ndk-kme-a2
             - ATTACHED_SAE_ID=tn-2-a2b1
-            - LINKED_TO_KME=https://ndk-kme-b2:8040
+            - LINKED_TO_KME=https://ndk-kme-b2:8000
             - LINKED_KME_ID=ndk-kme-b2
             - LINKED_SAE_ID=tn-1-a2b2
             - MIN_KEY_SIZE=64
@@ -117,7 +117,7 @@ services:
         ports:
             - "8030:8000"
         healthcheck:
-            test: curl -f -k --cert /certs/tn-2-a2b1.crt --key /certs/tn-2-a2b1.key https://ndk-kme-a2:8030 || exit 1
+            test: curl -f -k --cert /certs/tn-2-a2b1.crt --key /certs/tn-2-a2b1.key https://ndk-kme-a2:8000 || exit 1
             interval: 1m
             timeout: 10s
             retries: 1
@@ -134,7 +134,7 @@ services:
             - IS_MASTER=0
             - KME_ID=ndk-kme-b2
             - ATTACHED_SAE_ID=tn-1-a2b2
-            - LINKED_TO_KME=https://ndk-kme-a2:8030
+            - LINKED_TO_KME=https://ndk-kme-a2:8000
             - LINKED_KME_ID=ndk-kme-a2
             - LINKED_SAE_ID=tn-2-a2b1
             - MIN_KEY_SIZE=64
@@ -160,7 +160,7 @@ services:
         ports:
             - "8040:8000"
         healthcheck:
-            test: curl -f -k --cert /certs/tn-1-a2b2.crt --key /certs/tn-1-a2b2.key https://ndk-kme-b2:8040 || exit 1
+            test: curl -f -k --cert /certs/tn-1-a2b2.crt --key /certs/tn-1-a2b2.key https://ndk-kme-b2:8000 || exit 1
             interval: 1m
             timeout: 10s
             retries: 1
@@ -177,7 +177,7 @@ services:
             - IS_MASTER=1
             - KME_ID=ndk-kme-a3
             - ATTACHED_SAE_ID=tn-4-a3b3
-            - LINKED_TO_KME=https://ndk-kme-b3:60
+            - LINKED_TO_KME=https://ndk-kme-b3:8000
             - LINKED_KME_ID=ndk-kme-b3
             - LINKED_SAE_ID=tn-3-a1b3
             - MIN_KEY_SIZE=64
@@ -202,7 +202,7 @@ services:
         ports:
             - "8050:8000"
         healthcheck:
-            test: curl -f -k --cert /certs/tn-4-a3b3.crt --key /certs/tn-4-a3b3.key https://ndk-kme-a3:8050 || exit 1
+            test: curl -f -k --cert /certs/tn-4-a3b3.crt --key /certs/tn-4-a3b3.key https://ndk-kme-a3:8000 || exit 1
             interval: 1m
             timeout: 10s
             retries: 1
@@ -219,7 +219,7 @@ services:
             - IS_MASTER=0
             - KME_ID=ndk-kme-b3
             - ATTACHED_SAE_ID=tn-3-a1b3
-            - LINKED_TO_KME=https://ndk-kme-a3:8050
+            - LINKED_TO_KME=https://ndk-kme-a3:8000
             - LINKED_KME_ID=ndk-kme-a3
             - LINKED_SAE_ID=tn-4-a3b3
             - MIN_KEY_SIZE=64
@@ -245,7 +245,7 @@ services:
         ports:
             - "8060:8000"
         healthcheck:
-            test: curl -f -k --cert /certs/tn-3-a1b3.crt --key /certs/tn-3-a1b3.key https://ndk-kme-b3:8060 || exit 1
+            test: curl -f -k --cert /certs/tn-3-a1b3.crt --key /certs/tn-3-a1b3.key https://ndk-kme-b3:8000 || exit 1
             interval: 1m
             timeout: 10s
             retries: 1

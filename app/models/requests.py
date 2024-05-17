@@ -5,6 +5,7 @@ from fastapi import Path, Query
 from pydantic import BaseModel
 
 from app.dependencies import get_settings
+from app.models.discover_requests import WalkedNode
 from app.models.key_container import KeyIDContainer
 
 settings = get_settings()
@@ -32,3 +33,14 @@ class GetDecryptionKeysRequest(BaseModel):
 class PostDecryptionKeysRequest(BaseModel):
     key_IDs: Annotated[list[KeyIDContainer], Path(min_length=1)]
     key_IDs_extension: Union[dict, None] = None
+
+
+class ExternalKeysRequest(BaseModel):
+    key_id: UUID
+    key: Union[str, None] = None,
+    initiator_trusted_node_id: str
+    initiator_sae_id: str
+    target_trusted_node_id: str
+    target_sae_node_id: str
+    path_to_go: list[str]
+    discovered_network: list[WalkedNode]

@@ -12,16 +12,20 @@
         {
             "url": "https://localhost:8030",
             "kme_id": "ndk-kme-a2",
+            "linked_to": "ndk-kme-b2",
             "kme_cert": "certs/kme-a2.crt",
             "sae_cert": "certs/tn-1-a2b2.crt",
-            "sae_key": "certs/tn-1-a2b2.key"
+            "sae_key": "certs/tn-1-a2b2.key",
+            "distance": 1
         },
         {
             "url": "https://localhost:8040",
             "kme_id": "ndk-kme-b2",
+            "linked_to": "ndk-kme-a2",
             "kme_cert": "certs/kme-b2.crt",
             "sae_cert": "certs/tn-1-a2b2.crt",
-            "sae_key": "certs/tn-1-a2b2.key"
+            "sae_key": "certs/tn-1-a2b2.key",
+            "distance": 0
         }
     ],
     "attached_saes": [

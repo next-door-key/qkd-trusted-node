@@ -13,9 +13,11 @@ from pydantic_settings import (
 class AttachedKmes(BaseModel):
     url: str
     kme_id: str
+    linked_to: str
     kme_cert: str
     sae_cert: str
     sae_key: str
+    distance: int
 
 
 class AttachedSaes(BaseModel):
