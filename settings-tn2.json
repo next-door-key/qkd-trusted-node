@@ -5,7 +5,7 @@
     "ca_file": "certs/ca.crt",
     "min_key_size": 64,
     "max_key_size": 1024,
-    "default_key_size": 1024,
+    "default_key_size": 128,
     "max_key_count": 50,
     "max_keys_per_request": 50,
     "attached_kmes": [

@@ -36,11 +36,20 @@ class PostDecryptionKeysRequest(BaseModel):
 
 
 class ExternalKeysRequest(BaseModel):
+    first_key_id: UUID
     key_id: UUID
     key: Union[str, None] = None,
     initiator_trusted_node_id: str
     initiator_sae_id: str
     target_trusted_node_id: str
     target_sae_node_id: str
+    path_to_go: list[str]
+    discovered_network: list[WalkedNode]
+
+
+class VoidKeysRequest(BaseModel):
+    key_ids: list[UUID]
+    initiator_sae_id: str
+    target_sae_id: str
     path_to_go: list[str]
     discovered_network: list[WalkedNode]

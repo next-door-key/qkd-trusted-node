@@ -3,9 +3,12 @@ from fastapi import FastAPI
 from uvicorn.protocols.http.httptools_impl import HttpToolsProtocol
 
 from app.config import Settings
+from app.internal.key_manager import KeyManager
 
 
 class Lifecycle:
+    key_manager: KeyManager | None = None
+
     def __init__(self, app: FastAPI, settings: Settings):
         self.app = app
         self.settings = settings
@@ -50,6 +53,8 @@ class Lifecycle:
     async def before_start(self):
         self._verify_settings()
         self._configure_tls()
+
+        self.key_manager = KeyManager(self.settings)
 
     async def after_landing(self):
         pass

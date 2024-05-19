@@ -9,7 +9,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.dependencies import get_settings
 from app.internal.lifecycle import Lifecycle
-from app.routers import keys, discover, kmapi
+from app.routers import keys, discover, kmapi, internal
 
 
 @asynccontextmanager
@@ -28,6 +28,7 @@ app = FastAPI(lifespan=lifespan)
 app.add_middleware(HTTPSRedirectMiddleware)
 
 app.include_router(router=discover.router, prefix='/api/v1')
+app.include_router(router=internal.router, prefix='/api/v1')
 app.include_router(router=keys.router, prefix='/api/v1')
 app.include_router(router=kmapi.router, prefix='/api/v1')
 
