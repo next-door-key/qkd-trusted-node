@@ -109,7 +109,7 @@ async def ext_keys(
 
         next_key = get_request(
             next_kme.kme_id,
-            f'/api/v1/keys/{next_trusted_node_id}/enc_keys?size={len(key_a)}'
+            f'/api/v1/keys/{next_trusted_node_id}/enc_keys?size={len(key_a) * 8}'
         )['keys'][0]
 
         print(f'key sent over QKD: {next_key["key_ID"]}, {next_key["key"][:20]}')
